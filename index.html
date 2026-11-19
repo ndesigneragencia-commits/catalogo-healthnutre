@@ -297,7 +297,7 @@ function renderCart(){
   $("#cartTotal").previousElementSibling.textContent = CONFIG.mostrarPrecos ? "Investimento estimado" : "Total de potes";
   $("#cartTotal").textContent = CONFIG.mostrarPrecos ? brl(total) : potes;
   const falta = faltaMin(); $("#minWarn").className = "minwarn"+(falta>0?"":" ok");
-  $("#minWarn").textContent = !ids.length ? "" : falta>0 ? "Faltam "+brl(falta)+" para a compra mínima de "+brl(CONFIG.pedidoMinimo)+"." : "✓ Compra mínima de "+brl(CONFIG.pedidoMinimo)+" atingida.";
+  $("#minWarn").textContent = (!ids.length || !CONFIG.mostrarPrecos) ? "" : falta>0 ? "Faltam "+brl(falta)+" para a compra mínima de "+brl(CONFIG.pedidoMinimo)+"." : "✓ Compra mínima de "+brl(CONFIG.pedidoMinimo)+" atingida.";
 }
 
 function faltaMin(){ const ids=Object.keys(cart); if(!ids.length || !CONFIG.mostrarPrecos) return 0; if(ids.some(id=>{const p=PRODUCTS.find(x=>x.id===id); return !p||priceOf(p)<=0;})) return 0; const tot=ids.reduce((s,id)=>s+priceOf(PRODUCTS.find(x=>x.id===id))*cart[id],0); return Math.max(0,Math.round((CONFIG.pedidoMinimo-tot)*100)/100); }
